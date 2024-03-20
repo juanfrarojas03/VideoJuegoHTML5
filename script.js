@@ -24,6 +24,28 @@ car.steer = function () {
   car.x += car.sx;
   road.P0.x -= car.sx/4;
 };
+
+var collisionCount = 0;
+
+function handleCollision() {
+  collisionCount++;
+
+  localStorage.setItem("collisionCount", collisionCount);
+
+  console.log("Número de colisiones: " + collisionCount);
+}
+
+window.addEventListener('DOMContentLoaded', function() {
+
+  var storedCollisions = localStorage.getItem("collisionCount");
+
+  if (storedCollisions !== null) {
+    collisionCount = parseInt(storedCollisions);
+  }
+
+  console.log("Número de colisiones al cargar la página: " + collisionCount);
+});
+
 car.crash = function (d) {
   if (!car.crashed) {
     car.crashed = true;
@@ -35,6 +57,9 @@ car.crash = function (d) {
       car.crashed = false;
       car.sx = 0;
     }, 800);
+
+    handleCollision()
+
   }
 }
 var cars = document.getElementById('cars');
@@ -248,6 +273,9 @@ var frame = function () {
     requestAnimationFrame(frame);
   }
 };
+
+var derecha = 0;
+var izquierda = 0;
 //KEYBOARD
 var key = {
   pressed: [],
@@ -257,14 +285,20 @@ var key = {
       if (car.x > road.width * 0.15){
         if (key.pressed['left'] ||
             key.pressed[37] || // Key: Left arrow
-            key.pressed[65]) { // Key: 'A'
+            key.pressed[65]) {
+          izquierda++; // Key: 'D'
+          localStorage.setItem("TeclaIzquierda", izquierda);
+          console.log("Se apreto la tecla Izquierda: " + localStorage.getItem("TeclaIzquierda")); // Key: 'A'
           car.sx = -2.5;
         }
       } else car.crash(0.2);
       if (car.x < (road.width * 0.85) - car.width){
         if (key.pressed['right'] ||
             key.pressed[39] || // Key: Right arrow
-            key.pressed[68]) { // Key: 'D'
+            key.pressed[68]) {
+              derecha++; // Key: 'D'
+          localStorage.setItem("TeclaDerecha", derecha);
+          console.log("Se apreto la tecla Derecha: " + localStorage.getItem("TeclaDerecha"));
           car.sx = 2.5;
         }
       } else car.crash(-0.2);
@@ -399,6 +433,16 @@ fog.toggle = function () {
   fog.status = !fog.status;
   fog.value = fog.status ? 0.1 : 0.02;  
 };
+
+function resetColision(){
+  var reset = 0;
+  localStorage.setItem("collisionCount", reset)
+  console.log("se reinicio el contador")
+}
+
+
+
+
 //INIT
 game.init();
 
