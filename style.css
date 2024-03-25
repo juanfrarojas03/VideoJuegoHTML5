@@ -189,3 +189,32 @@ body {
   .hidden {
     display: none;
   }
+
+  
+#input{
+  float: left;
+  position: absolute;
+  z-index: 9999;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+#submit{
+  font-size: 20px;
+  margin-top: 10px;
+  background-color: #c95;
+  border-radius: 5px;
+}
+
+#usuario{
+  background: none;
+  background-color: white;
+  border: none;
+  font-size: 30px;
+  text-align: center;
+}
+
+#nombre{
+  color: white;
+}

@@ -447,3 +447,18 @@ function resetColision(){
 game.init();
 
 console.log("El script se está ejecutando correctamente.");
+
+
+
+//USUARIO
+function guardarEnLocalStorage(){
+  var valorText= document.getElementById("usuario").value;
+  localStorage.setItem("usuarioPC", valorText);
+  document.getElementById("nombre").innerText = "Usuario: "+ valorText;
+}
+
+function mostrarNombre(){
+  var text= localStorage.getItem("usuarioPC");
+
+  document.getElementById("nombre").innerText = "Usuario: "+ text;
+}
