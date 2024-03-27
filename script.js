@@ -336,6 +336,8 @@ game.init = function () {
   lap.init();
   fog.init();
   cars.frame();
+
+
 };
 // BUTTONS
 var buttons = ['left', 'up', 'right'];
@@ -444,9 +446,17 @@ function resetColision(){
 
 
 //INIT
-game.init();
 
-console.log("El script se está ejecutando correctamente.");
+const socket = new WebSocket("wss://socketsbay.com/wss/v2/1/demo/");
+
+socket.addEventListener("open", function (event) {
+  mostrarNombre();
+  game.init();
+  console.log("Se conecto");
+  socket.send("Se cargo mi juego");
+});
+
+
 
 
 
@@ -455,10 +465,31 @@ function guardarEnLocalStorage(){
   var valorText= document.getElementById("usuario").value;
   localStorage.setItem("usuarioPC", valorText);
   document.getElementById("nombre").innerText = "Usuario: "+ valorText;
+  guardarJsonLocalStorage();
 }
 
-function mostrarNombre(){
-  var text= localStorage.getItem("usuarioPC");
 
+
+function mostrarNombre(){
+
+  var text= localStorage.getItem("usuarioPC");
   document.getElementById("nombre").innerText = "Usuario: "+ text;
+}
+
+function guardarJsonLocalStorage(){
+
+  var user = localStorage.getItem("usuarioPC");
+  var collide = localStorage.getItem("collisionCount");
+  var KeyI = localStorage.getItem("TeclaIzquierda");
+  var KeyD = localStorage.getItem("TeclaDerecha");
+  var datos = {
+    username:user,
+    colisiones:collide,
+    teclaI:KeyI,
+    teclaD:KeyD
+  }
+
+  var datosJson =JSON.stringify(datos);
+
+  localStorage.setItem("dataUsuario", datosJson);
 }
