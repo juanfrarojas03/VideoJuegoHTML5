@@ -446,12 +446,11 @@ function resetColision(){
 
 
 //INIT
-
+game.init();
 const socket = new WebSocket("wss://socketsbay.com/wss/v2/1/demo/");
 
 socket.addEventListener("open", function (event) {
   mostrarNombre();
-  game.init();
   console.log("Se conecto");
   socket.send("Se cargo mi juego");
 });
