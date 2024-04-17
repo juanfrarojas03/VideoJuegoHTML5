@@ -244,6 +244,8 @@ position.frame = function () {
   for (var i=0; i < position.childNodes.length-1; i++) {
     var a = position.childNodes[i+1];
     a.innerText = value[i];
+
+    localStorage.setItem("position",value);
   }
 }
 //LAP 
@@ -286,7 +288,7 @@ var key = {
         if (key.pressed['left'] ||
             key.pressed[37] || // Key: Left arrow
             key.pressed[65]) {
-          izquierda++; // Key: 'D'
+          izquierda++; // Key: 'A'
           localStorage.setItem("TeclaIzquierda", izquierda);
           console.log("Se apreto la tecla Izquierda: " + localStorage.getItem("TeclaIzquierda")); // Key: 'A'
           car.sx = -2.5;
@@ -447,12 +449,24 @@ function resetColision(){
 
 //INIT
 game.init();
-const socket = new WebSocket("wss://socketsbay.com/wss/v2/1/demo/");
+const socket = new WebSocket("wss://echo.websocket.org");
 
 socket.addEventListener("open", function (event) {
   mostrarNombre();
   console.log("Se conecto");
   socket.send("Se cargo mi juego");
+
+  var jugador = localStorage.getItem("usuarioPC");
+  var posicionfinal = localStorage.getItem("position");
+
+  var posicionLS = {
+    game: "Racing",
+    player: jugador,
+    eventtype: "posicion",
+    value: posicionfinal
+  }
+
+  socket.send(posicionLS);
 });
 
 

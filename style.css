@@ -1,5 +1,5 @@
 body {
-    background: #111;
+    background: #464646;
     font-family: "Lato", "Lucida Grande","Lucida Sans Unicode", Tahoma, Sans-Serif;
     user-select: none;
     min-width: 420px;
@@ -31,7 +31,7 @@ body {
   #game {
     width: 320px; height: 240px;
     position: relative;
-    margin: 45px auto 40px;  
+    margin: 45px 515px 40px;  
     perspective: 100px;
     transform: scale(1.3);
     overflow: hidden;
@@ -217,4 +217,31 @@ body {
 
 #nombre{
   color: white;
+}
+
+table , td, th {
+	border: 1px solid #922;
+	border-collapse: collapse;
+  font-family: monospace;
+  text-align: center;
+}
+td, th {
+	padding: 3px;
+	width: 30px;
+	height: 25px;
+}
+th {
+	background: #c95;
+}
+.even {
+	background: #c95;
+}
+.odd {
+	background: #c95;
+}
+
+#tabla{
+  background-color: #c95;
+  z-index: -1;
+  float: right;
 }
