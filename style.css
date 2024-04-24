@@ -31,7 +31,7 @@ body {
   #game {
     width: 320px; height: 240px;
     position: relative;
-    margin: 45px auto 40px;  
+    margin: 45px 515px 40px;  
     perspective: 100px;
     transform: scale(1.3);
     overflow: hidden;
@@ -244,5 +244,4 @@ th {
   background-color: #c95;
   z-index: -1;
   float: right;
-  position: absolute;
 }

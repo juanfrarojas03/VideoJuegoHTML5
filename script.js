@@ -246,6 +246,18 @@ position.frame = function () {
     a.innerText = value[i];
 
     localStorage.setItem("position",value);
+
+    //Evento 1
+    var jugador = localStorage.getItem("usuarioPC");
+
+    var posicionLS = {
+      game: "carreras",
+      player: jugador,
+      event: "posicion",
+      value: parseInt(value) * -1
+    }
+    var dataJson = JSON.stringify(posicionLS);
+    socket.send(dataJson);
   }
 }
 //LAP 
@@ -448,26 +460,20 @@ function resetColision(){
 
 
 //INIT
-game.init();
-const socket = new WebSocket("wss://echo.websocket.org");
+
+mostrarNombre();
+const socket = new WebSocket("wss://gamehubmanager.azurewebsites.net/ws");
 
 socket.addEventListener("open", function (event) {
-  mostrarNombre();
+  game.init();
   console.log("Se conecto");
-  socket.send("Se cargo mi juego");
-
-  var jugador = localStorage.getItem("usuarioPC");
-  var posicionfinal = localStorage.getItem("position");
-
-  var posicionLS = {
-    game: "Racing",
-    player: jugador,
-    eventtype: "posicion",
-    value: posicionfinal
-  }
-
-  socket.send(posicionLS);
 });
+
+
+//RECIBIR
+socket.onmessage = function(event){
+  console.log(JSON.parse(event.data));
+}
 
 
 
