@@ -460,24 +460,22 @@ function resetColision(){
 
 
 //INIT
-
-mostrarNombre();
 const socket = new WebSocket("wss://gamehubmanager.azurewebsites.net/ws");
 
 socket.addEventListener("open", function (event) {
   game.init();
   console.log("Se conecto");
 });
-
+mostrarNombre();
 
 //RECIBIR
-socket.onmessage = function(event){
-  console.log(JSON.parse(event.data));
-}
-
-
-
-
+  socket.onmessage = function(event){
+    var data = JSON.parse(event.data);
+  
+    var prueba = event.data;
+    console.log(data);
+    console.log(data.Player);
+  }
 
 //USUARIO
 function guardarEnLocalStorage(){
