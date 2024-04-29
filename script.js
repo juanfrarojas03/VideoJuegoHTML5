@@ -302,7 +302,6 @@ var key = {
             key.pressed[65]) {
           izquierda++; // Key: 'A'
           localStorage.setItem("TeclaIzquierda", izquierda);
-          console.log("Se apreto la tecla Izquierda: " + localStorage.getItem("TeclaIzquierda")); // Key: 'A'
           car.sx = -2.5;
         }
       } else car.crash(0.2);
@@ -312,7 +311,7 @@ var key = {
             key.pressed[68]) {
               derecha++; // Key: 'D'
           localStorage.setItem("TeclaDerecha", derecha);
-          console.log("Se apreto la tecla Derecha: " + localStorage.getItem("TeclaDerecha"));
+
           car.sx = 2.5;
         }
       } else car.crash(-0.2);
@@ -468,14 +467,42 @@ socket.addEventListener("open", function (event) {
 });
 mostrarNombre();
 
+
 //RECIBIR
-  socket.onmessage = function(event){
-    var data = JSON.parse(event.data);
-  
-    var prueba = event.data;
-    console.log(data);
-    console.log(data.Player);
-  }
+socket.onmessage = function(event){
+
+    var datos = JSON.parse(event.data);
+    window.parsedDatos = JSON.parse(datos);
+
+    console.log("Parseado:",window.parsedDatos[0]);
+    actualizarTabla();
+}
+
+//MODIFICAR TABLA
+
+function actualizarTabla(){
+  const tablaBody = document.querySelector("#tabla tbody");
+
+  tablaBody.innerHTML = '';
+
+  window.parsedDatos.forEach(obj =>{
+    const fila = document.createElement('tr');
+    const celdaPosicion = document.createElement('td');
+    const celdaNombre = document.createElement('td');
+
+    celdaPosicion.textContent = Math.abs(obj.Value);
+    celdaNombre.textContent = obj.Player;
+
+    fila.appendChild(celdaPosicion);
+    fila.appendChild(celdaNombre);
+
+    tablaBody.appendChild(fila);
+    
+    console.log("se actualizo");
+  })
+}
+
+
 
 //USUARIO
 function guardarEnLocalStorage(){
