@@ -1,0 +1,19 @@
+{
+  "background_color": "#aaaaaa",
+  "dir": "ltr",
+  "display": "standalone",
+  "name": "Enduro Game",
+  "orientation": "portrait-primary",
+  "scope": "/https://juanfrarojas03.github.io/VideoJuegoHTML5/",
+  "short_name": "Enduro",
+  "start_url": "/https://juanfrarojas03.github.io/VideoJuegoHTML5/",
+  "theme_color": "#aaaaaa",
+  "id": "net.PhilipeInc",
+  "description": "Game with websocket y ranking en tiempo real",
+  "lang": "es",
+  "categories": [
+    "entertainment",
+    "games",
+    "sports"
+  ]
+}

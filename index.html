@@ -6,6 +6,7 @@
     <title>Enduro Game</title>
     <link rel="stylesheet" href="style.css">
     <script src="script.js" defer></script>
+    <link rel="stylesheet" href="manifest.json">
 </head>
 <body>
   <div id="tabla">
@@ -71,5 +72,11 @@
       <p>Left/Right Arrows or A/D to steer and<br> 
         Up Arrow, W or Space to accelerate
       </p>
+
+      <script>
+        if (typeof navigator.serviceWorker !== 'undefined') {
+          navigator.serviceWorker.register('sw.js')
+        }
+      </script>
 </body>
 </html>
