@@ -6,7 +6,7 @@
   "orientation": "portrait-primary",
   "scope": "/",
   "short_name": "Enduro",
-  "start_url": "/",
+  "start_url": "/VideoJuegoHTML5",
   "theme_color": "#aaaaaa",
   "id": "net.PhilipeInc",
   "description": "Game with websocket y ranking en tiempo real",
