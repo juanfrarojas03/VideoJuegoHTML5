@@ -1,7 +1,7 @@
 {
   "background_color": "#aaaaaa",
   "dir": "ltr",
-  "display": "standalone",
+  "display": "landscape",
   "name": "Enduro Game",
   "orientation": "portrait-primary",
   "scope": "/",
