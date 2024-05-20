@@ -1,6 +1,6 @@
 //CARS
 var car = document.getElementById('car');
-car.init = function () { 
+car.init = function () {
   car.speed = 0.2;
   car.turn = 0;
   car.x = car.offsetLeft;
@@ -9,20 +9,20 @@ car.init = function () {
   car.height = car.offsetHeight;
   car.maxSpeed = 5.;
   car.km = 0;
-  car.motor = 1;  
+  car.motor = 1;
   car.crashed = false;
   car.acc = 0.025,
-  car.break = 0.02;
+    car.break = 0.02;
 };
 car.frame = function () {
   car.motor *= -1;
   car.style.left = parseInt(car.x) + 'px';
-  car.style.transform = 'scaleX('+car.motor+')';
+  car.style.transform = 'scaleX(' + car.motor + ')';
   car.steer();
 };
 car.steer = function () {
   car.x += car.sx;
-  road.P0.x -= car.sx/4;
+  road.P0.x -= car.sx / 4;
 };
 
 var collisionCount = 0;
@@ -32,10 +32,9 @@ function handleCollision() {
 
   localStorage.setItem("collisionCount", collisionCount);
 
-  console.log("Número de colisiones: " + collisionCount);
 }
 
-window.addEventListener('DOMContentLoaded', function() {
+window.addEventListener('DOMContentLoaded', function () {
 
   var storedCollisions = localStorage.getItem("collisionCount");
 
@@ -43,7 +42,6 @@ window.addEventListener('DOMContentLoaded', function() {
     collisionCount = parseInt(storedCollisions);
   }
 
-  console.log("Número de colisiones al cargar la página: " + collisionCount);
 });
 
 car.crash = function (d) {
@@ -66,14 +64,14 @@ var cars = document.getElementById('cars');
 cars.init = function () {
   cars.n = 32;
   cars.x = 0;
-  cars.speed = 1;  
+  cars.speed = 1;
   cars.interval = 500;
   cars.oponents = [];
   cars.easy = 0.2;
-  for (var j=0; j<cars.n; j++) {
+  for (var j = 0; j < cars.n; j++) {
     cars.oponents[j] = [];
-    for (var i=0; i<3; i++) {
-      cars.oponents[j][i] = cars.create(i,j); 
+    for (var i = 0; i < 3; i++) {
+      cars.oponents[j][i] = cars.create(i, j);
     }
   }
   car.st = document.createElement('style');
@@ -82,17 +80,17 @@ cars.init = function () {
 };
 cars.frame = function () {
   var relative = cars.speed - car.speed;
-  for (var j=0; j<cars.n; j++) {
-    for (var i=0; i<3; i++) { 
-      var c = cars.oponents[j][i];   
-      var d = road.width * 0.42, 
-        w = road.width - d - car.width; 
-      c.x = (road.P0.x - road.height - 40) * (c.y * c.y * 0.00001) + 
-            (d/2) + (i * (w/2)); 
+  for (var j = 0; j < cars.n; j++) {
+    for (var i = 0; i < 3; i++) {
+      var c = cars.oponents[j][i];
+      var d = road.width * 0.42,
+        w = road.width - d - car.width;
+      c.x = (road.P0.x - road.height - 40) * (c.y * c.y * 0.00001) +
+        (d / 2) + (i * (w / 2));
       c.y += relative;
       var h = cars.n * car.height * 3;
-      if (!c.classList.contains('hidden') && 
-          c.y < car.height - 5 && c.y > 0) {
+      if (!c.classList.contains('hidden') &&
+        c.y < car.height - 5 && c.y > 0) {
         //collision
         if (car.x < 115 && i == 0) car.crash(0.1);
         if (car.x > 100 && car.x < 175 && i == 1) car.crash();
@@ -100,7 +98,7 @@ cars.frame = function () {
       }
       if (c.y > h) {
         // back to bottom
-        cars.color(c);  
+        cars.color(c);
         c.classList.remove('hidden');
         if (car.x < 115 && i == 0) c.classList.add('hidden');
         if (car.x > 100 && car.x < 175 && i == 1) c.classList.add('hidden');
@@ -108,11 +106,11 @@ cars.frame = function () {
         if (Math.random() > cars.easy) c.classList.add('hidden');
         if (!c.classList.contains('hidden')) car.position++;
         c.y = 0;
-      } else if (c.y < 0)  {
+      } else if (c.y < 0) {
         //passing
         if (!c.classList.contains('hidden')) {
           car.position--;
-        } 
+        }
         cars.color(c);
         c.classList.remove('hidden');
         if (Math.random() > cars.easy) c.classList.add('hidden');
@@ -125,37 +123,37 @@ cars.frame = function () {
       c.style.opacity = Math.min(o, 1);
     }
     if (!cars.oponents[j][0].classList.contains('hidden') &&
-        !cars.oponents[j][1].classList.contains('hidden') &&
-        !cars.oponents[j][2].classList.contains('hidden')) {
+      !cars.oponents[j][1].classList.contains('hidden') &&
+      !cars.oponents[j][2].classList.contains('hidden')) {
       cars.oponents[j][parseInt(Math.random() * 3)].classList.add('hidden');
     }
   }
-  car.st.innerHTML = '#cars .car {transform: rotateX(-56deg) scaleX('+car.motor+') }';
+  car.st.innerHTML = '#cars .car {transform: rotateX(-56deg) scaleX(' + car.motor + ') }';
   car.style.left = parseInt(car.x) + 'px';
 };
-cars.create = function (i,j) {  
+cars.create = function (i, j) {
   var c = document.createElement('div');
   c.className = 'car';
   cars.color(c);
-  var d = road.width * 0.42, 
-      w = road.width - d - car.width; 
-  c.x = (d/2) + (i * (w/2)); 
-  c.y = -car.height + (j * car.height*3); 
-  cars.appendChild(c);   
+  var d = road.width * 0.42,
+    w = road.width - d - car.width;
+  c.x = (d / 2) + (i * (w / 2));
+  c.y = -car.height + (j * car.height * 3);
+  cars.appendChild(c);
   if (Math.random() > 0.1) c.classList.add('hidden');
   if (i == 1 && j == 0 || i == 1 && j == 1) c.classList.add('hidden');
   return c;
 };
 cars.color = function (c) {
-  var randomColor = Math.random()*360;
+  var randomColor = Math.random() * 360;
   var randomLight = 2.5 + (Math.random() * 2);
-  c.style['filter'] = 'hue-rotate('+randomColor+'deg) brightness('+randomLight+')';
+  c.style['filter'] = 'hue-rotate(' + randomColor + 'deg) brightness(' + randomLight + ')';
 };
 //ROAD
 var road = document.getElementById('road');
-road.init = function() {
+road.init = function () {
   road.ctx = road.getContext('2d');
-  road.width = road.offsetWidth; 
+  road.width = road.offsetWidth;
   road.height = road.offsetHeight;
   road.state = 0;
   road.x = 0;
@@ -163,30 +161,30 @@ road.init = function() {
   road.lineWidth = 2.5;
   road.lineColor = 'rgba(255,255,255,0.7)';
   road.lineDashOffset = 0;
-  road.P0 =  {x: parseInt(road.width/2), y: 0, xs: 0};
-  road.P1 =  {x: road.offset, y: road.height};
-  road.P2 =  {x: road.width - road.offset, y: road.height};
-  road.Pc =  {x1: road.P1.x + 86, x2: road.P2.x - 86};
+  road.P0 = { x: parseInt(road.width / 2), y: 0, xs: 0 };
+  road.P1 = { x: road.offset, y: road.height };
+  road.P2 = { x: road.width - road.offset, y: road.height };
+  road.Pc = { x1: road.P1.x + 86, x2: road.P2.x - 86 };
   road.frame();
 };
 road.frame = function () {
-  road.P0.x  += road.P0.xs/2;
-  road.Pc.x1 -= road.P0.xs/3;
-  road.Pc.x2 -= road.P0.xs/3; 
+  road.P0.x += road.P0.xs / 2;
+  road.Pc.x1 -= road.P0.xs / 3;
+  road.Pc.x2 -= road.P0.xs / 3;
   road.lineDashOffset -= car.speed;
-  
+
   road.ctx.clearRect(0, 0, road.width, road.height);
   road.ctx.beginPath();
 
-  road.ctx.moveTo(       road.P1.x,  road.P1.y);
-  road.ctx.bezierCurveTo(road.Pc.x1, road.P1.y - (road.height*0.7),
-                         road.P0.x,  road.P0.y,
-                         road.P0.x,  road.P0.y);
+  road.ctx.moveTo(road.P1.x, road.P1.y);
+  road.ctx.bezierCurveTo(road.Pc.x1, road.P1.y - (road.height * 0.7),
+    road.P0.x, road.P0.y,
+    road.P0.x, road.P0.y);
 
-  road.ctx.moveTo(       road.P2.x,  road.P2.y);
-  road.ctx.bezierCurveTo(road.Pc.x2, road.P2.y - (road.height*0.7),
-                         road.P0.x,  road.P0.y,
-                         road.P0.x,  road.P0.y);
+  road.ctx.moveTo(road.P2.x, road.P2.y);
+  road.ctx.bezierCurveTo(road.Pc.x2, road.P2.y - (road.height * 0.7),
+    road.P0.x, road.P0.y,
+    road.P0.x, road.P0.y);
 
   road.ctx.strokeStyle = road.lineColor;
   road.ctx.lineWidth = road.lineWidth;
@@ -196,9 +194,9 @@ road.frame = function () {
 };
 road.curve = function (side) {
   if (!(road.state == -1 && side == 'left') &&
-      !(road.state == 1 && side == 'right')) {
+    !(road.state == 1 && side == 'right')) {
     if (road.state == 1 && side == 'left') road.state = 0;
-    else if (road.state == -1 && side == 'right') road.state = 0;  
+    else if (road.state == -1 && side == 'right') road.state = 0;
     else if (road.state == 0 && side == 'left') road.state = -1;
     else if (road.state == 0 && side == 'right') road.state = 1;
     road.P0.xs = 1.5 * ((side == 'left') ? -1 : 1);
@@ -210,28 +208,28 @@ road.curve = function (side) {
 };
 road.randomCurve = function () {
   game.curveCount = setTimeout(function () {
-    road.curve(Math.random()>0.5 ? 'left' : 'right');
-  }, 2000); 
+    road.curve(Math.random() > 0.5 ? 'left' : 'right');
+  }, 2000);
 };
 //MOUNTAINS
 var mountains = document.getElementById('mountains');
 mountains.frame = function () {
-  var curve = (road.P0.x - road.width/2)/100; 
+  var curve = (road.P0.x - road.width / 2) / 100;
   var left = mountains.offsetLeft;
-  if (left < -4.5 * road.width) left =  1.5 * road.width;
-  if (left >  1.5 * road.width) left = -4.5 * road.width;
-  var d = curve + ((car.speed)*curve*0.5);
+  if (left < -4.5 * road.width) left = 1.5 * road.width;
+  if (left > 1.5 * road.width) left = -4.5 * road.width;
+  var d = curve + ((car.speed) * curve * 0.5);
   mountains.style.left = parseInt(left - d) + 'px';
 };
 //UI
 var km = document.getElementById('km');
 km.frame = function () {
-  car.km += (car.speed/1000);
+  car.km += (car.speed / 1000);
   var value = parseInt(car.km * 10).toString();
   while (value.length < km.childNodes.length) value = '0' + value;
-  for (var i=1; i < km.childNodes.length; i++) {
+  for (var i = 1; i < km.childNodes.length; i++) {
     var a = km.childNodes[i];
-    a.innerText = value[i-1];
+    a.innerText = value[i - 1];
   }
 };
 var position = document.getElementById('position');
@@ -239,13 +237,13 @@ position.init = function () {
   cars.total = 200;
   car.position = cars.total;
 }
-position.frame = function () {   
+position.frame = function () {
   var value = parseInt(car.position).toString();
-  for (var i=0; i < position.childNodes.length-1; i++) {
-    var a = position.childNodes[i+1];
+  for (var i = 0; i < position.childNodes.length - 1; i++) {
+    var a = position.childNodes[i + 1];
     a.innerText = value[i];
 
-    localStorage.setItem("position",value);
+    localStorage.setItem("position", value);
 
     //Evento 1
     var jugador = localStorage.getItem("usuarioPC");
@@ -257,15 +255,17 @@ position.frame = function () {
       value: parseInt(value) * -1
     }
     var dataJson = JSON.stringify(posicionLS);
-    socket.send(dataJson);
+    
+    probarEnvio(dataJson);
   }
 }
+
 //LAP 
 var lap = document.getElementById('lap');
 lap.init = function () {
   lap.value = 1;
 }
-lap.frame = function () {  
+lap.frame = function () {
   if (car.position <= 0) {
     lap.value++;
     car.easy += 0.5;
@@ -293,33 +293,33 @@ var izquierda = 0;
 //KEYBOARD
 var key = {
   pressed: [],
-  frame: function () { 
+  frame: function () {
     if (!car.crashed) {
       car.sx = 0;
-      if (car.x > road.width * 0.15){
+      if (car.x > road.width * 0.15) {
         if (key.pressed['left'] ||
-            key.pressed[37] || // Key: Left arrow
-            key.pressed[65]) {
+          key.pressed[37] || // Key: Left arrow
+          key.pressed[65]) {
           izquierda++; // Key: 'A'
           localStorage.setItem("TeclaIzquierda", izquierda);
           car.sx = -2.5;
         }
       } else car.crash(0.2);
-      if (car.x < (road.width * 0.85) - car.width){
+      if (car.x < (road.width * 0.85) - car.width) {
         if (key.pressed['right'] ||
-            key.pressed[39] || // Key: Right arrow
-            key.pressed[68]) {
-              derecha++; // Key: 'D'
+          key.pressed[39] || // Key: Right arrow
+          key.pressed[68]) {
+          derecha++; // Key: 'D'
           localStorage.setItem("TeclaDerecha", derecha);
 
           car.sx = 2.5;
         }
       } else car.crash(-0.2);
       if (key.pressed['up'] ||
-          key.pressed[32] || // Key: Space
-          key.pressed[38] || // Key: Up arrow
-          key.pressed[87]) { // Key: 'W'
-        if (car.speed < car.maxSpeed) { 
+        key.pressed[32] || // Key: Space
+        key.pressed[38] || // Key: Up arrow
+        key.pressed[87]) { // Key: 'W'
+        if (car.speed < car.maxSpeed) {
           car.speed += car.acc;
           game.audio.oscillator.frequency.value += car.acc * 10;
         }
@@ -332,7 +332,7 @@ var key = {
     }
   }
 };
-window.addEventListener('keydown', function (event) { 
+window.addEventListener('keydown', function (event) {
   key.pressed[event.keyCode] = true;
 });
 window.addEventListener('keyup', function (event) {
@@ -342,6 +342,7 @@ window.addEventListener('keyup', function (event) {
 var game = document.getElementById('game');
 game.init = function () {
   game.time = 0;
+  game.state = 1;
   car.init();
   cars.init();
   road.init();
@@ -356,7 +357,7 @@ game.init = function () {
 var buttons = ['left', 'up', 'right'];
 buttons.forEach(function (id) {
   var button = document.getElementById(id);
-  var press = function (event) { 
+  var press = function (event) {
     key.pressed[id] = true;
   };
   var release = function (event) {
@@ -398,7 +399,7 @@ game.audio = function () {
   game.audio.context = new AudioContext();
   game.audio.volume = game.audio.context.createGain();
   game.audio.volume.gain.value = 0.1;
-  game.audio.volume.connect(game.audio.context.destination);  
+  game.audio.volume.connect(game.audio.context.destination);
   var o = game.audio.context.createOscillator();
   o.frequency.value = 0;
   o.detune.value = 0;
@@ -441,18 +442,17 @@ game.changeTime = function () {
 var fog = document.getElementById('fog');
 fog.init = function () {
   fog.value = 0.02;
-  fog.status = false;  
+  fog.status = false;
 };
 fog.toggle = function () {
-  fog.classList.toggle('hidden');  
+  fog.classList.toggle('hidden');
   fog.status = !fog.status;
-  fog.value = fog.status ? 0.1 : 0.02;  
+  fog.value = fog.status ? 0.1 : 0.02;
 };
 
-function resetColision(){
+function resetColision() {
   var reset = 0;
   localStorage.setItem("collisionCount", reset)
-  console.log("se reinicio el contador")
 }
 
 
@@ -461,31 +461,40 @@ function resetColision(){
 //INIT
 const socket = new WebSocket("wss://gamehubmanager.azurewebsites.net/ws");
 
+
 socket.addEventListener("open", function (event) {
   game.init();
-  console.log("Se conecto");
-});
+})
+
+setTimeout(() => {
+  if (game.state != 1){
+    game.init();
+  }
+}, 2000);
+
+
+
+
 mostrarNombre();
 
 
 //RECIBIR
-socket.onmessage = function(event){
+socket.onmessage = function (event) {
 
-    var datos = JSON.parse(event.data);
-    window.parsedDatos = JSON.parse(datos);
+  var datos = JSON.parse(event.data);
+  window.parsedDatos = JSON.parse(datos);
 
-    console.log("Parseado:",window.parsedDatos[0]);
-    actualizarTabla();
+  actualizarTabla();
 }
 
 //MODIFICAR TABLA
 
-function actualizarTabla(){
+function actualizarTabla() {
   const tablaBody = document.querySelector("#tabla tbody");
 
   tablaBody.innerHTML = '';
 
-  window.parsedDatos.forEach(obj =>{
+  window.parsedDatos.forEach(obj => {
     const fila = document.createElement('tr');
     const celdaPosicion = document.createElement('td');
     const celdaNombre = document.createElement('td');
@@ -497,43 +506,64 @@ function actualizarTabla(){
     fila.appendChild(celdaNombre);
 
     tablaBody.appendChild(fila);
-    
-    console.log("se actualizo");
   })
 }
 
 
 
 //USUARIO
-function guardarEnLocalStorage(){
-  var valorText= document.getElementById("usuario").value;
+function guardarEnLocalStorage() {
+  var valorText = document.getElementById("usuario").value;
   localStorage.setItem("usuarioPC", valorText);
-  document.getElementById("nombre").innerText = "Usuario: "+ valorText;
+  document.getElementById("nombre").innerText = "Usuario: " + valorText;
   guardarJsonLocalStorage();
 }
 
 
 
-function mostrarNombre(){
+function mostrarNombre() {
 
-  var text= localStorage.getItem("usuarioPC");
-  document.getElementById("nombre").innerText = "Usuario: "+ text;
+  var text = localStorage.getItem("usuarioPC");
+  document.getElementById("nombre").innerText = "Usuario: " + text;
 }
 
-function guardarJsonLocalStorage(){
+function guardarJsonLocalStorage() {
 
   var user = localStorage.getItem("usuarioPC");
   var collide = localStorage.getItem("collisionCount");
   var KeyI = localStorage.getItem("TeclaIzquierda");
   var KeyD = localStorage.getItem("TeclaDerecha");
   var datos = {
-    username:user,
-    colisiones:collide,
-    teclaI:KeyI,
-    teclaD:KeyD
+    username: user,
+    colisiones: collide,
+    teclaI: KeyI,
+    teclaD: KeyD
   }
 
-  var datosJson =JSON.stringify(datos);
+  var datosJson = JSON.stringify(datos);
 
   localStorage.setItem("dataUsuario", datosJson);
+}
+
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", function() {
+    navigator.serviceWorker
+      .register("/serviceWorker.js")
+      .then(res => console.log("service worker registered"))
+      .catch(err => console.log("service worker not registered", err))
+  })
+}
+
+function probarEnvio(mensaje){
+  try {
+    socket.send(mensaje, function(error) {
+            if(error == undefined)
+        return;
+      else
+              logger.debug("Async error:"+error);
+    });
+  } catch(e) {
+    logger.debug("Sync error: " + e);
+    socket.close();
+  }
 }
