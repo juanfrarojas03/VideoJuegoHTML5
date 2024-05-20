@@ -1,9 +1,9 @@
 {
   "background_color": "#aaaaaa",
   "dir": "ltr",
-  "display": "landscape",
+  "display": "standalone",
   "name": "Enduro Game",
-  "orientation": "portrait-primary",
+  "orientation": "any",
   "scope": "/",
   "short_name": "Enduro",
   "start_url": "/VideoJuegoHTML5",
