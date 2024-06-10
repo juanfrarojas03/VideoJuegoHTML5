@@ -456,6 +456,36 @@ function resetColision() {
 }
 
 
+//Detectar Giroscopio
+function iniciarDeteccionDeMovimiento() {
+  if (typeof DeviceMotionEvent.requestPermission === 'function') {
+      DeviceMotionEvent.requestPermission()
+          .then(permissionState => {
+              if (permissionState === 'granted') {
+                  window.addEventListener('deviceorientation', manejarOrientacionDelDispositivo, true);
+              }
+          })
+          .catch(console.error);
+  } else {
+      window.addEventListener('deviceorientation', manejarOrientacionDelDispositivo, true);
+  }
+}
+
+
+function manejarOrientacionDelDispositivo(evento) {
+  const beta = evento.beta;
+
+  if (beta > 10 && beta < 170) { //IZQ
+      key.pressed['left'] = true;
+      key.pressed['right'] = false;
+  } else if (beta < -10 && beta > -170) { //DER
+      key.pressed['left'] = false;
+      key.pressed['right'] = true;
+  } else { //RECTO
+      key.pressed['left'] = false;
+      key.pressed['right'] = false;
+  }
+}
 
 
 //INIT
