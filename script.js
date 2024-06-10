@@ -455,7 +455,6 @@ function resetColision() {
   localStorage.setItem("collisionCount", reset)
 }
 
-
 //Detectar Giroscopio
 function iniciarDeteccionDeMovimiento() {
   if (typeof DeviceMotionEvent.requestPermission === 'function') {
@@ -493,6 +492,7 @@ const socket = new WebSocket("wss://gamehubmanager.azurewebsites.net/ws");
 
 
 socket.addEventListener("open", function (event) {
+  iniciarDeteccionDeMovimiento();
   game.init();
 })
 
