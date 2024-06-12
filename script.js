@@ -31,7 +31,7 @@ function handleCollision() {
   collisionCount++;
 
   localStorage.setItem("collisionCount", collisionCount);
-
+  Vibrar();
 }
 
 window.addEventListener('DOMContentLoaded', function () {
