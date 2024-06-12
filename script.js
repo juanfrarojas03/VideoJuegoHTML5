@@ -502,7 +502,12 @@ setTimeout(() => {
   }
 }, 2000);
 
-
+function Vibrar(){
+  if (navigator.vibrate) {
+    console.log("¡El dispositivo está vibrando!");
+    navigator.vibrate(300);
+  }
+}
 
 
 mostrarNombre();
